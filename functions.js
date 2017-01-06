@@ -12,11 +12,7 @@ $( document ).ready(function() {
 
     var cardImagePath = "img/cards/";
 
-    //strategy lookup objects
-    var pairLookup = null;
-    var softLookup = null;
-    var hardLookup = null;
-
+    //buttons
     $("#btn_deal").click(function(){
 
     	$(this).hide();
@@ -26,11 +22,14 @@ $( document ).ready(function() {
 
     $("#btn_hit").click(function(){
     	if(play == "hit"){
+    		$("#checkmark").fadeIn( "slow", function() {
+			    console.log("fadein complete");
+			});
     		streak++;
     		$("#streak").html(streak);
     	}
     	else{
-    		streak = 0;
+			streak = 0;
     		$("#streak").html(streak);
     	}
     	deal();
@@ -72,10 +71,36 @@ $( document ).ready(function() {
     	deal();
     });
 
-
     function deal(){
 
-    	playerHand = getRandomHand();
+    	//see what hands player wants
+    	var options = [];
+    	$("#checkboxes input:checkbox").each(function(){
+			if($(this).prop("checked")){
+				options.push($(this).prop("name"));
+			}
+		});
+
+		console.log("the options are: " + options);
+
+    	//get a random type of hand from options
+    	var handType = options[Math.floor(Math.random() * options.length)];
+    	console.log("the random handtype is: " + handType);
+
+    	switch(handType){
+    		case "hards":
+    			playerHand = getRandomHard();
+    			break;
+    		case "softs":
+    			playerHand = getRandomSoft();
+    			break;
+    		case "pairs":
+    			playerHand = getRandomPair();
+    			break;
+    	}
+
+
+    	//give the dealer a hand too
     	dealerHand = getRandomHand();
 
     	$("#bottom .box .left img").attr("src", playerHand.card1.path);
@@ -92,7 +117,83 @@ $( document ).ready(function() {
 
     }
 
+    //give the player a pair
+    function getRandomPair(){
+    	var hand = null;
+    	var handValue = null; 
 
+    	var card1 = getRandomCard();
+    	var type = "pair";
+
+		handValue = card1.value;
+
+    	hand = {
+    		handValue: handValue,
+    		card1: card1,
+    		card2: card1,
+    		type: type
+    	};
+
+    	return hand;
+    }
+
+    //give the player a soft hand
+    function getRandomSoft(){
+
+    	var hand = null;
+    	var type = "soft";
+
+    	var card1 = getRandomCard();
+
+    	//don't give AA
+    	while(card1.value == 11){
+    		card1 = getRandomCard();
+    	}
+
+    	var card2 = {
+    		value: 11,
+    		name: "ace",
+    		suit: "spades",
+    		path: cardImagePath + "ace_of_spades.png"
+    	};
+
+    	hand = {
+    		handValue: card1.value + card2.value,
+    		card1: card1,
+    		card2: card2,
+    		type: type
+    	};
+
+    	return hand;
+    }
+
+    //give the player a hard hand
+    function getRandomHard(){
+    	var hand = null;
+    	var type = "hard";
+
+    	var card1 = getRandomCard();
+    	var card2 = getRandomCard();
+
+    	//don't give A
+    	while(card1.value == 11){
+    		card1 = getRandomCard();
+    	}
+
+    	//don't give A or pair
+    	while(card2.value == card1.value || card2.value == 11){
+    		card2 = getRandomCard();
+    	}
+
+    	hand = {
+    		handValue: card1.value + card2.value,
+    		card1: card1,
+    		card2: card2,
+    		type: type
+    	};
+
+    	return hand;
+    }
 
     //give the player two cards, return hand object {soft, totalValue}
     function getRandomHand(){

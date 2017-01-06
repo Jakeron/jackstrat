@@ -1,6 +1,6 @@
 #container {
 	position: fixed;
-	height: 650px;
+	height: 600px;
 	width: 900px;
 }
 
@@ -9,42 +9,83 @@
 	right: 0;
 	height: 100%;
 	font-weight: 100%;
-	background-color: green;
+	background-image: url("img/table_.jpg");
+	background-size: 900px 600px;
+	background-repeat: no-repeat;
 }
 
 #top {
 	top: 0;
 	height: 50%;
-	border: 1px solid red;
 }
 
 #bottom {
 	bottom: 0;
 	height: 50%;
-	border: 1px solid red;
 }
 
-.box {
+#advice {
+	float: right;
+	padding-right: 25px;
+	height: 125px;
+	width: 125px;
+	border: 1px solid white;
+	vertical-align: top;
+}
+
+#advice p {
+	font-weight: bolder;
+	color: red;
+	font-size: large;
+}
+
+#advice #checkmark { 
+	max-width: 100%;
+    height: auto;
+}
+
+#top .box {
+	height: 142px;
+	width: 140px;
+	margin: 0 auto;
+	position: relative;
+	top: 30%;
+	transform: translateY(-50%);
+	/*border: 1px solid lime;*/
+}
+
+
+#bottom .box {
+	height: 142px;
+	width: 130px;
+	margin: 0 auto;
+	position: relative;
+	top: 19%;
+	transform: translateY(-50%);
+	/*border: 1px solid lime;*/
+}
+
+/*.box {
 	height: 142px;
 	width: 200px;
 	margin: 0 auto;
 	position: relative;
 	top: 50%;
 	transform: translateY(-50%);
+}*/
+
+.box .right {
+	width: 100px;
+	height: 100%;
+	float: right;
+	z-index: 1;
+	margin-left: -100px;
 }
 
 .box .left {
-	border: 1px solid yellow;
-	width: 49%;
+	width: 100px;
 	height: 100%;
 	float: left;
-}
-
-.box .right {
-	border: 1px solid yellow;
-	width: 49%;
-	height: 100%;
-	float: right;
 }
 
 .box .left img {
@@ -77,10 +118,16 @@
 	margin: 0;
 }
 
-#score {
+#checkboxes {
 	float: right;
+	padding-right: 10px;
+}
+
+#streak_box {
+	float: right;
+	padding-right: 10px;
 	text-align: center;
-	width:100px;
-	color: white;
-	border: 1px solid white;
+	width: 100px;
+	color: yellow;
+	font-weight: bold;
 }
